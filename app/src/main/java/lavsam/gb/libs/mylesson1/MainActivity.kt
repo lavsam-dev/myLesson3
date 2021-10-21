@@ -3,6 +3,7 @@ package lavsam.gb.libs.mylesson1
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import lavsam.gb.libs.mylesson1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), IMainView {
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity(), IMainView {
         setContentView(mainBinding.root)
         presenter = MainPresenter(this)
 
+        runOnUiThread {
+            Toast.makeText(this, "runOnUiThread", Toast.LENGTH_SHORT).show() }
+
         val listener = View.OnClickListener {
             val type = when (it.id) {
                 R.id.btn_counter1 -> CounterType.COUNTER_OF_DAYS
@@ -29,9 +33,14 @@ class MainActivity : AppCompatActivity(), IMainView {
             presenter.counterClick(type)
         }
 
+        val listenerStart = View.OnClickListener {
+            presenter.counterStart()
+        }
+
         mainBinding.btnCounter1.setOnClickListener(listener)
         mainBinding.btnCounter2.setOnClickListener(listener)
         mainBinding.btnCounter3.setOnClickListener(listener)
+        mainBinding.btnStart.setOnClickListener ( listenerStart )
     }
 
     override fun onStart() {

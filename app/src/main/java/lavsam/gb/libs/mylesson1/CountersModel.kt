@@ -3,7 +3,7 @@ package lavsam.gb.libs.mylesson1
 class CountersModel {
     private val counters = mutableListOf(0, 0, 0)
 
-    private fun getCurrent(index: Int): Int {
+    fun getCurrent(index: Int): Int {
         return counters[index]
     }
 
