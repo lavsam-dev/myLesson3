@@ -3,6 +3,7 @@ package lavsam.gb.libs.mylesson1
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import lavsam.gb.libs.mylesson1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), IMainView {
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity(), IMainView {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
         presenter = MainPresenter(this)
+
+        runOnUiThread {
+            Toast.makeText(this, "runOnUiThread", Toast.LENGTH_SHORT).show() }
 
         val listener = View.OnClickListener {
             val type = when (it.id) {

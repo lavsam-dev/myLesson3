@@ -1,6 +1,9 @@
 package lavsam.gb.libs.mylesson1
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
@@ -8,6 +11,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import lavsam.gb.libs.mylesson1.MainPresenter.Companion.RX_LABEL
 import java.util.concurrent.TimeUnit
+
 
 class MainPresenter(private val view: IMainView) {
 
@@ -18,7 +22,6 @@ class MainPresenter(private val view: IMainView) {
     private val model = CountersModel()
 
     fun counterClick(type: CounterType) {
-
         val behaviorCounter = BehaviorCounter(model)
         val c1 = Counting(view, behaviorCounter)
 //        behaviorSubject.onNext(CounterType.COUNTER_OF_DAYS)
@@ -56,7 +59,6 @@ fun BehaviorCounter(model: CountersModel): @NonNull Observable<Int> {
             CounterType.COUNTER_OF_YEARS -> model.next(1)
             CounterType.COUNTER_OF_PAYLOAD -> model.next(2)
         }
-//        view.setButtonText(t2, nextValue.toString())
     })
 }
 
@@ -68,7 +70,9 @@ class Counting(view: IMainView, val observable: Observable<Int>) {
 
         override fun onNext(t: Int?) {
             Log.i(RX_LABEL, "onNext ${t.toString()}")
-//            view.setButtonText(CounterType.COUNTER_OF_PAYLOAD, t.toString())
+            Handler(Looper.getMainLooper()).post(Runnable {
+                view.setButtonText(CounterType.COUNTER_OF_PAYLOAD, t.toString())
+            })
         }
 
         override fun onError(e: Throwable?) {
