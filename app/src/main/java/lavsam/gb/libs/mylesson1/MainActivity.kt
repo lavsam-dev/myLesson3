@@ -33,9 +33,14 @@ class MainActivity : AppCompatActivity(), IMainView {
             presenter.counterClick(type)
         }
 
+        val listenerStart = View.OnClickListener {
+            presenter.counterStart()
+        }
+
         mainBinding.btnCounter1.setOnClickListener(listener)
         mainBinding.btnCounter2.setOnClickListener(listener)
         mainBinding.btnCounter3.setOnClickListener(listener)
+        mainBinding.btnStart.setOnClickListener ( listenerStart )
     }
 
     override fun onStart() {
